@@ -190,14 +190,25 @@ document.addEventListener('DOMContentLoaded', function() {
         documento.rect(x, y, largura, altura);
         
         if (conteudo) {
-            documento.setFontSize(7);
+            documento.setFontSize(8.5);
             documento.setFont('helvetica', 'normal');
             documento.setTextColor(26, 26, 26);
-            const linhas = documento.splitTextToSize(conteudo, largura - 4);
-            const alturaLinha = 4;
+            
+            const paddingHorizontal = 7;
+            const paddingVertical = 9;
+            const larguraTexto = largura - (paddingHorizontal * 2);
+            const linhas = documento.splitTextToSize(conteudo.trim(), larguraTexto);
+            const alturaLinha = 8;
+            const espacamentoInicial = paddingVertical + 3;
+            
             linhas.forEach((linha, index) => {
-                if ((index * alturaLinha) + 2 < altura - 2) {
-                    documento.text(linha, x + 2, y + 2 + (index * alturaLinha) + 3, { maxWidth: largura - 4 });
+                const posicaoYLinha = y + espacamentoInicial + (index * alturaLinha);
+                const alturaDisponivel = altura - (paddingVertical * 2);
+                if (posicaoYLinha + alturaLinha <= y + altura - paddingVertical) {
+                    documento.text(linha.trim(), x + paddingHorizontal, posicaoYLinha, { 
+                        maxWidth: larguraTexto,
+                        align: 'left'
+                    });
                 }
             });
         }
@@ -288,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const larguraUtil = larguraPagina - (margem * 2);
         const larguraColuna = larguraUtil / colunasPlanilha.length;
         const alturaCabecalho = 18;
-        const alturaLinha = 50;
+        const alturaLinha = 100;
 
         let posicaoY = configurarCabecalhoPdf(documento, larguraPagina, margem, dadosFormulario.responsavel, dadosFormulario.area);
         posicaoY = desenharCabecalhoTabela(documento, posicaoY, larguraPagina, margem, larguraColuna, alturaCabecalho);
