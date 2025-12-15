@@ -246,7 +246,7 @@ header .highlight {
 .btn-add {
     background-color: #1a1a1a;
     color: #ffffff;
-    border: 1px solid #c8e6c9;
+    border: none;
 }
 
 .btn-add:hover {
@@ -259,7 +259,7 @@ header .highlight {
 .btn-remove {
     background-color: #1a1a1a;
     color: #ffffff;
-    border: 1px solid #ffcdd2;
+    border: none;
 }
 
 .btn-remove:hover {
