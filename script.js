@@ -212,6 +212,65 @@ document.addEventListener('DOMContentLoaded', function() {
         return posicaoY + alturaLinha;
     }
 
+    function desenharRodapePdf(documento, larguraPagina, alturaPagina, margem) {
+        const alturaRodape = 80;
+        const posicaoYRodape = alturaPagina - alturaRodape - margem;
+        
+        documento.setFontSize(7);
+        documento.setFont('helvetica', 'normal');
+        documento.setTextColor(90, 90, 90);
+        
+        let posicaoY = posicaoYRodape;
+        
+        documento.text('© 2025 Plano de Ação 5W2H', larguraPagina / 2, posicaoY, { align: 'center' });
+        posicaoY += 8;
+        
+        documento.setDrawColor(224, 224, 224);
+        documento.setLineWidth(0.3);
+        documento.line(margem + 50, posicaoY, larguraPagina - margem - 50, posicaoY);
+        posicaoY += 10;
+        
+        documento.setFontSize(6.5);
+        documento.setTextColor(42, 42, 42);
+        documento.text('Desenvolvido por acadêmicos de Engenharia da Computação - IFMA na disciplina de Segurança do Trabalho e Ergonomia:', larguraPagina / 2, posicaoY, { align: 'center', maxWidth: larguraPagina - (margem * 2) - 100 });
+        posicaoY += 10;
+        
+        documento.setFontSize(6);
+        documento.setTextColor(58, 58, 58);
+        
+        const nomesColuna1 = [
+            'Pedro Vinicius Prado do Nascimento',
+            'Carlos Eduardo Santos de Lima',
+            'Sávio Daniel Matos Marinho'
+        ];
+        
+        const nomesColuna2 = [
+            'Gustavo Ribeiro Lobato',
+            'Luiz Felipe Miranda Freitas',
+            'José Luiz Silva Farias'
+        ];
+        
+        const larguraColuna = 180;
+        const distanciaCentro = 120; 
+        const centroPagina = larguraPagina / 2;
+        const posicaoXCol1 = centroPagina - distanciaCentro;
+        const posicaoXCol2 = centroPagina + distanciaCentro;
+        
+        nomesColuna1.forEach((nome, index) => {
+            documento.text(nome, posicaoXCol1, posicaoY + (index * 6), { align: 'center', maxWidth: larguraColuna });
+        });
+        
+        nomesColuna2.forEach((nome, index) => {
+            documento.text(nome, posicaoXCol2, posicaoY + (index * 6), { align: 'center', maxWidth: larguraColuna });
+        });
+        
+        posicaoY += 22;
+        
+        documento.setFontSize(5.5);
+        documento.setTextColor(138, 138, 138);
+        documento.text('Orientador: Lindemberg Alex Pereira Trindade', larguraPagina / 2, posicaoY, { align: 'center' });
+    }
+
     function gerarPdf() {
         const dadosFormulario = coletarDadosFormulario();
         
@@ -234,8 +293,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let posicaoY = configurarCabecalhoPdf(documento, larguraPagina, margem, dadosFormulario.responsavel, dadosFormulario.area);
         posicaoY = desenharCabecalhoTabela(documento, posicaoY, larguraPagina, margem, larguraColuna, alturaCabecalho);
 
-        dadosFormulario.linhas.forEach(linha => {
-            if (posicaoY + alturaLinha > alturaPagina - margem) {
+        dadosFormulario.linhas.forEach((linha, index) => {
+            if (posicaoY + alturaLinha > alturaPagina - 100) {
+                desenharRodapePdf(documento, larguraPagina, alturaPagina, margem);
                 documento.addPage();
                 posicaoY = margem;
                 posicaoY = configurarCabecalhoPdf(documento, larguraPagina, margem, dadosFormulario.responsavel, dadosFormulario.area);
@@ -243,6 +303,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             posicaoY = desenharLinhaDados(documento, linha, posicaoY, larguraPagina, margem, larguraColuna, alturaLinha);
         });
+
+        desenharRodapePdf(documento, larguraPagina, alturaPagina, margem);
 
         const dataAtual = new Date();
         const nomeArquivo = `Plano_Acão_5W2H_${dataAtual.toISOString().split('T')[0]}.pdf`;

@@ -424,6 +424,14 @@ header .highlight {
     margin-bottom: 0;
 }
 
+.credits-orientador {
+    font-size: 0.75em;
+    color: #8a8a8a;
+    margin-top: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
 @media (max-width: 768px) {
     .credits-footer {
         padding: 35px 20px;
