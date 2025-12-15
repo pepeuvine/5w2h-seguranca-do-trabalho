@@ -1,144 +1,351 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plano de Ação 5W2H</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <div class="header-content">
-                <h1>Plano de Ação <span class="highlight">5W2H</span></h1>
-                <div class="header-fields">
-                    <div class="field-group">
-                        <label for="responsavel">Responsável:</label>
-                        <input type="text" id="responsavel" name="responsavel" placeholder="Nome do responsável">
-                    </div>
-                    <div class="field-group">
-                        <label for="area">Área:</label>
-                        <input type="text" id="area" name="area" placeholder="Área/Departamento">
-                    </div>
-                </div>
+      <header>
+        <div class="header-content">
+          <h1>Plano de Ação <span class="highlight">5W2H</span></h1>
+          <div class="header-fields">
+            <div class="field-group">
+              <label for="responsavel">Responsável:</label>
+              <input
+                type="text"
+                id="responsavel"
+                name="responsavel"
+                placeholder="Nome do responsável"
+              />
             </div>
-        </header>
+            <div class="field-group">
+              <label for="area">Área:</label>
+              <input
+                type="text"
+                id="area"
+                name="area"
+                placeholder="Área/Departamento"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
 
-        <form id="form5w2h">
-            <div class="table-wrapper">
-                <table class="planilha-table">
-                    <thead>
-                        <tr>
-                            <th>O QUE?<br><span class="sub-header">WHAT</span></th>
-                            <th>POR QUE?<br><span class="sub-header">WHY</span></th>
-                            <th>ONDE?<br><span class="sub-header">WHERE</span></th>
-                            <th>QUEM?<br><span class="sub-header">WHO</span></th>
-                            <th>QUANDO?<br><span class="sub-header">WHEN</span></th>
-                            <th>COMO?<br><span class="sub-header">HOW</span></th>
-                            <th>QUANTO?<br><span class="sub-header">HOW MUCH</span></th>
-                            <th>STATUS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><textarea name="what_0" placeholder="O que será feito?"></textarea></td>
-                            <td><textarea name="why_0" placeholder="Por que isso é necessário? Qual o objetivo?"></textarea></td>
-                            <td><textarea name="where_0" placeholder="Onde a ação será realizada?"></textarea></td>
-                            <td><textarea name="who_0" placeholder="Quem será o responsável por cada parte?"></textarea></td>
-                            <td><textarea name="when_0" placeholder="Quando será feito? Qual o prazo ou data?"></textarea></td>
-                            <td><textarea name="how_0" placeholder="Como a ação será executada? Quais os passos?"></textarea></td>
-                            <td><textarea name="howMuch_0" placeholder="Quanto custará? Qual o investimento?"></textarea></td>
-                            <td>
-                                <select name="status_0">
-                                    <option value="">Selecione</option>
-                                    <option value="Pendente">Pendente</option>
-                                    <option value="Em Andamento">Em Andamento</option>
-                                    <option value="Concluído">Concluído</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><textarea name="what_1" placeholder="O que será feito?"></textarea></td>
-                            <td><textarea name="why_1" placeholder="Por que isso é necessário? Qual o objetivo?"></textarea></td>
-                            <td><textarea name="where_1" placeholder="Onde a ação será realizada?"></textarea></td>
-                            <td><textarea name="who_1" placeholder="Quem será o responsável por cada parte?"></textarea></td>
-                            <td><textarea name="when_1" placeholder="Quando será feito? Qual o prazo ou data?"></textarea></td>
-                            <td><textarea name="how_1" placeholder="Como a ação será executada? Quais os passos?"></textarea></td>
-                            <td><textarea name="howMuch_1" placeholder="Quanto custará? Qual o investimento?"></textarea></td>
-                            <td>
-                                <select name="status_1">
-                                    <option value="">Selecione</option>
-                                    <option value="Pendente">Pendente</option>
-                                    <option value="Em Andamento">Em Andamento</option>
-                                    <option value="Concluído">Concluído</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><textarea name="what_2" placeholder="O que será feito?"></textarea></td>
-                            <td><textarea name="why_2" placeholder="Por que isso é necessário? Qual o objetivo?"></textarea></td>
-                            <td><textarea name="where_2" placeholder="Onde a ação será realizada?"></textarea></td>
-                            <td><textarea name="who_2" placeholder="Quem será o responsável por cada parte?"></textarea></td>
-                            <td><textarea name="when_2" placeholder="Quando será feito? Qual o prazo ou data?"></textarea></td>
-                            <td><textarea name="how_2" placeholder="Como a ação será executada? Quais os passos?"></textarea></td>
-                            <td><textarea name="howMuch_2" placeholder="Quanto custará? Qual o investimento?"></textarea></td>
-                            <td>
-                                <select name="status_2">
-                                    <option value="">Selecione</option>
-                                    <option value="Pendente">Pendente</option>
-                                    <option value="Em Andamento">Em Andamento</option>
-                                    <option value="Concluído">Concluído</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><textarea name="what_3" placeholder="O que será feito?"></textarea></td>
-                            <td><textarea name="why_3" placeholder="Por que isso é necessário? Qual o objetivo?"></textarea></td>
-                            <td><textarea name="where_3" placeholder="Onde a ação será realizada?"></textarea></td>
-                            <td><textarea name="who_3" placeholder="Quem será o responsável por cada parte?"></textarea></td>
-                            <td><textarea name="when_3" placeholder="Quando será feito? Qual o prazo ou data?"></textarea></td>
-                            <td><textarea name="how_3" placeholder="Como a ação será executada? Quais os passos?"></textarea></td>
-                            <td><textarea name="howMuch_3" placeholder="Quanto custará? Qual o investimento?"></textarea></td>
-                            <td>
-                                <select name="status_3">
-                                    <option value="">Selecione</option>
-                                    <option value="Pendente">Pendente</option>
-                                    <option value="Em Andamento">Em Andamento</option>
-                                    <option value="Concluído">Concluído</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><textarea name="what_4" placeholder="O que será feito?"></textarea></td>
-                            <td><textarea name="why_4" placeholder="Por que isso é necessário? Qual o objetivo?"></textarea></td>
-                            <td><textarea name="where_4" placeholder="Onde a ação será realizada?"></textarea></td>
-                            <td><textarea name="who_4" placeholder="Quem será o responsável por cada parte?"></textarea></td>
-                            <td><textarea name="when_4" placeholder="Quando será feito? Qual o prazo ou data?"></textarea></td>
-                            <td><textarea name="how_4" placeholder="Como a ação será executada? Quais os passos?"></textarea></td>
-                            <td><textarea name="howMuch_4" placeholder="Quanto custará? Qual o investimento?"></textarea></td>
-                            <td>
-                                <select name="status_4">
-                                    <option value="">Selecione</option>
-                                    <option value="Pendente">Pendente</option>
-                                    <option value="Em Andamento">Em Andamento</option>
-                                    <option value="Concluído">Concluído</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      <form id="form5w2h">
+        <div class="table-wrapper">
+          <table class="planilha-table">
+            <thead>
+              <tr>
+                <th>O QUE?<br /><span class="sub-header">WHAT</span></th>
+                <th>POR QUE?<br /><span class="sub-header">WHY</span></th>
+                <th>ONDE?<br /><span class="sub-header">WHERE</span></th>
+                <th>QUEM?<br /><span class="sub-header">WHO</span></th>
+                <th>QUANDO?<br /><span class="sub-header">WHEN</span></th>
+                <th>COMO?<br /><span class="sub-header">HOW</span></th>
+                <th>QUANTO?<br /><span class="sub-header">HOW MUCH</span></th>
+                <th>STATUS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <textarea
+                    name="what_0"
+                    placeholder="O que será feito?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="why_0"
+                    placeholder="Por que isso é necessário? Qual o objetivo?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="where_0"
+                    placeholder="Onde a ação será realizada?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="who_0"
+                    placeholder="Quem será o responsável por cada parte?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="when_0"
+                    placeholder="Quando será feito? Qual o prazo ou data?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="how_0"
+                    placeholder="Como a ação será executada? Quais os passos?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="howMuch_0"
+                    placeholder="Quanto custará? Qual o investimento?"
+                  ></textarea>
+                </td>
+                <td>
+                  <select name="status_0">
+                    <option value="">Selecione</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em Andamento">Em Andamento</option>
+                    <option value="Concluído">Concluído</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea
+                    name="what_1"
+                    placeholder="O que será feito?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="why_1"
+                    placeholder="Por que isso é necessário? Qual o objetivo?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="where_1"
+                    placeholder="Onde a ação será realizada?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="who_1"
+                    placeholder="Quem será o responsável por cada parte?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="when_1"
+                    placeholder="Quando será feito? Qual o prazo ou data?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="how_1"
+                    placeholder="Como a ação será executada? Quais os passos?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="howMuch_1"
+                    placeholder="Quanto custará? Qual o investimento?"
+                  ></textarea>
+                </td>
+                <td>
+                  <select name="status_1">
+                    <option value="">Selecione</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em Andamento">Em Andamento</option>
+                    <option value="Concluído">Concluído</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea
+                    name="what_2"
+                    placeholder="O que será feito?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="why_2"
+                    placeholder="Por que isso é necessário? Qual o objetivo?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="where_2"
+                    placeholder="Onde a ação será realizada?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="who_2"
+                    placeholder="Quem será o responsável por cada parte?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="when_2"
+                    placeholder="Quando será feito? Qual o prazo ou data?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="how_2"
+                    placeholder="Como a ação será executada? Quais os passos?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="howMuch_2"
+                    placeholder="Quanto custará? Qual o investimento?"
+                  ></textarea>
+                </td>
+                <td>
+                  <select name="status_2">
+                    <option value="">Selecione</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em Andamento">Em Andamento</option>
+                    <option value="Concluído">Concluído</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea
+                    name="what_3"
+                    placeholder="O que será feito?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="why_3"
+                    placeholder="Por que isso é necessário? Qual o objetivo?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="where_3"
+                    placeholder="Onde a ação será realizada?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="who_3"
+                    placeholder="Quem será o responsável por cada parte?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="when_3"
+                    placeholder="Quando será feito? Qual o prazo ou data?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="how_3"
+                    placeholder="Como a ação será executada? Quais os passos?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="howMuch_3"
+                    placeholder="Quanto custará? Qual o investimento?"
+                  ></textarea>
+                </td>
+                <td>
+                  <select name="status_3">
+                    <option value="">Selecione</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em Andamento">Em Andamento</option>
+                    <option value="Concluído">Concluído</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <textarea
+                    name="what_4"
+                    placeholder="O que será feito?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="why_4"
+                    placeholder="Por que isso é necessário? Qual o objetivo?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="where_4"
+                    placeholder="Onde a ação será realizada?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="who_4"
+                    placeholder="Quem será o responsável por cada parte?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="when_4"
+                    placeholder="Quando será feito? Qual o prazo ou data?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="how_4"
+                    placeholder="Como a ação será executada? Quais os passos?"
+                  ></textarea>
+                </td>
+                <td>
+                  <textarea
+                    name="howMuch_4"
+                    placeholder="Quanto custará? Qual o investimento?"
+                  ></textarea>
+                </td>
+                <td>
+                  <select name="status_4">
+                    <option value="">Selecione</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em Andamento">Em Andamento</option>
+                    <option value="Concluído">Concluído</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-            <div class="button-container">
-                <button type="button" id="generatePdf" class="btn-generate">Gerar Relatório PDF</button>
-            </div>
-        </form>
+        <div class="actions-container">
+          <div class="row-controls">
+            <button
+              type="button"
+              class="btn-control btn-add"
+              onclick="adicionarLinha()"
+            >
+              <span>+</span> Adicionar Linha
+            </button>
+            <button
+              type="button"
+              class="btn-control btn-remove"
+              onclick="removerLinha()"
+            >
+              <span>-</span> Remover Linha
+            </button>
+          </div>
+
+          <button type="button" id="generatePdf" class="btn-generate">
+            Gerar Relatório PDF
+          </button>
+        </div>
+      </form>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

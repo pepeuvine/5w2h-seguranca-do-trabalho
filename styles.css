@@ -207,6 +207,93 @@ header .highlight {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* --- ESTILOS DOS BOTÕES DE AÇÃO --- */
+.actions-container {
+    padding: 30px 50px;
+    background-color: #ffffff;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.row-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-control {
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-control span {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Botão Adicionar (Estilo Verde Suave) */
+.btn-add {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: 1px solid #c8e6c9;
+}
+
+.btn-add:hover {
+    background-color: #0a0a0a;
+    border-color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Botão Remover (Estilo Vermelho Suave) */
+.btn-remove {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: 1px solid #ffcdd2;
+}
+
+.btn-remove:hover {
+    background-color: #0a0a0a;
+    border-color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.btn-control:active {
+    transform: translateY(0);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .actions-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+    
+    .row-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-control {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .btn-generate {
+        width: 100%;
+    }
+}
+
 @media (max-width: 1024px) {
     .header-content {
         flex-direction: column;

@@ -1,27 +1,82 @@
-/**
- * Script principal para o formulário 5W2H
- */
+// --- VARIÁVEIS GLOBAIS ---
 
+// Controla o índice das linhas. Começa com 5 pois o HTML inicial já tem 5 linhas (indices 0 a 4).
+let totalLinhas = 5;
+
+// Definição das colunas
+const colunasPlanilha = [
+    { chave: 'what', titulo: 'O QUE?', subtitulo: 'WHAT' },
+    { chave: 'why', titulo: 'POR QUE?', subtitulo: 'WHY' },
+    { chave: 'where', titulo: 'ONDE?', subtitulo: 'WHERE' },
+    { chave: 'who', titulo: 'QUEM?', subtitulo: 'WHO' },
+    { chave: 'when', titulo: 'QUANDO?', subtitulo: 'WHEN' },
+    { chave: 'how', titulo: 'COMO?', subtitulo: 'HOW' },
+    { chave: 'howMuch', titulo: 'QUANTO?', subtitulo: 'HOW MUCH' },
+    { chave: 'status', titulo: 'STATUS', subtitulo: '' }
+];
+
+/**
+ * Adiciona UMA nova linha ao final da tabela
+ */
+window.adicionarLinha = function() {
+    const tbody = document.querySelector('.planilha-table tbody');
+    
+    // O índice da nova linha será igual ao total atual
+    const index = totalLinhas;
+    
+    const novaLinhaHTML = `
+        <tr>
+            <td><textarea name="what_${index}" placeholder="O que será feito?"></textarea></td>
+            <td><textarea name="why_${index}" placeholder="Por que isso é necessário? Qual o objetivo?"></textarea></td>
+            <td><textarea name="where_${index}" placeholder="Onde a ação será realizada?"></textarea></td>
+            <td><textarea name="who_${index}" placeholder="Quem será o responsável por cada parte?"></textarea></td>
+            <td><textarea name="when_${index}" placeholder="Quando será feito? Qual o prazo ou data?"></textarea></td>
+            <td><textarea name="how_${index}" placeholder="Como a ação será executada? Quais os passos?"></textarea></td>
+            <td><textarea name="howMuch_${index}" placeholder="Quanto custará? Qual o investimento?"></textarea></td>
+            <td>
+                <select name="status_${index}">
+                    <option value="">Selecione</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Em Andamento">Em Andamento</option>
+                    <option value="Concluído">Concluído</option>
+                </select>
+            </td>
+        </tr>
+    `;
+
+    // Insere o novo HTML no final do corpo da tabela
+    tbody.insertAdjacentHTML('beforeend', novaLinhaHTML);
+    
+    // Incrementa o contador
+    totalLinhas++;
+};
+
+/**
+ * Remove a ÚLTIMA linha da tabela
+ */
+window.removerLinha = function() {
+    // Impede que o usuário remova todas as linhas (mantém pelo menos 1)
+    if (totalLinhas <= 1) {
+        alert("É necessário manter pelo menos uma linha no plano de ação.");
+        return;
+    }
+
+    const tbody = document.querySelector('.planilha-table tbody');
+    
+    // Remove o último filho (a última tr) do tbody
+    if (tbody.lastElementChild) {
+        tbody.removeChild(tbody.lastElementChild);
+        totalLinhas--; // Decrementa o contador
+    }
+};
+
+// --- INICIALIZAÇÃO E LÓGICA DO PDF ---
 document.addEventListener('DOMContentLoaded', function() {
     const formulario = document.getElementById('form5w2h');
     const botaoGerarPdf = document.getElementById('generatePdf');
 
-    const numeroLinhas = 5;
-
-    const colunasPlanilha = [
-        { chave: 'what', titulo: 'O QUE?', subtitulo: 'WHAT' },
-        { chave: 'why', titulo: 'POR QUE?', subtitulo: 'WHY' },
-        { chave: 'where', titulo: 'ONDE?', subtitulo: 'WHERE' },
-        { chave: 'who', titulo: 'QUEM?', subtitulo: 'WHO' },
-        { chave: 'when', titulo: 'QUANDO?', subtitulo: 'WHEN' },
-        { chave: 'how', titulo: 'COMO?', subtitulo: 'HOW' },
-        { chave: 'howMuch', titulo: 'QUANTO?', subtitulo: 'HOW MUCH' },
-        { chave: 'status', titulo: 'STATUS', subtitulo: '' }
-    ];
-
     /**
-     * Coleta todos os dados preenchidos no formulário de todas as linhas
-     * @returns {Object} Objeto com as respostas do formulário e informações do cabeçalho
+     * Coleta dados do formulário baseado no total de linhas atual
      */
     function coletarDadosFormulario() {
         const dadosFormulario = {};
@@ -34,7 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         dadosFormulario.linhas = [];
         
-        for (let i = 0; i < numeroLinhas; i++) {
+        // Itera até o número atual de linhas
+        for (let i = 0; i < totalLinhas; i++) {
             const linha = {};
             let linhaTemDados = false;
             
@@ -57,36 +113,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return dadosFormulario;
     }
 
-    /**
-     * Verifica se há pelo menos um campo preenchido no formulário
-     * @param {Object} dadosFormulario - Dados coletados do formulário
-     * @returns {boolean} True se houver dados, False caso contrário
-     */
     function possuiDados(dadosFormulario) {
         return dadosFormulario.linhas && dadosFormulario.linhas.length > 0;
     }
 
-    /**
-     * Configura o cabeçalho do PDF (título, responsável, área e data)
-     * @param {Object} documento - Instância do jsPDF
-     * @param {number} larguraPagina - Largura da página em pontos
-     * @param {number} margem - Margem lateral em pontos
-     * @param {string} responsavel - Nome do responsável
-     * @param {string} area - Área/Departamento
-     * @returns {number} Posição Y após o cabeçalho
-     */
+    // --- FUNÇÕES DE DESENHO DO PDF (Mantidas do original) ---
+
     function configurarCabecalhoPdf(documento, larguraPagina, margem, responsavel, area) {
         const dataAtual = new Date();
         const dataFormatada = dataAtual.toLocaleDateString('pt-BR', { 
-            day: '2-digit', 
-            month: '2-digit', 
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
+            day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
         });
-
         let posicaoY = margem;
-
         documento.setFontSize(16);
         documento.setFont('helvetica', 'bold');
         documento.setTextColor(26, 26, 26);
@@ -98,151 +136,82 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let posicaoXInfo = larguraPagina - margem;
         let textosInfo = [];
-        
-        if (responsavel && responsavel.trim() !== '') {
-            textosInfo.push(`Responsável: ${responsavel}`);
-        }
-        if (area && area.trim() !== '') {
-            textosInfo.push(`Área: ${area}`);
-        }
+        if (responsavel) textosInfo.push(`Responsável: ${responsavel}`);
+        if (area) textosInfo.push(`Área: ${area}`);
 
         textosInfo.forEach((texto) => {
             const larguraTexto = documento.getTextWidth(texto);
             documento.text(texto, posicaoXInfo - larguraTexto, posicaoY);
             posicaoXInfo -= larguraTexto + 20;
         });
-        
         posicaoY += 10;
-
         documento.setFontSize(8);
         documento.setTextColor(122, 122, 122);
         documento.text(`Gerado em: ${dataFormatada}`, margem, posicaoY);
-        posicaoY += 12;
-
-        return posicaoY;
+        return posicaoY + 12;
     }
 
-    /**
-     * Desenha o cabeçalho da tabela no PDF
-     * @param {Object} documento - Instância do jsPDF
-     * @param {number} posicaoY - Posição vertical atual
-     * @param {number} larguraPagina - Largura da página
-     * @param {number} margem - Margem lateral
-     * @param {number} larguraColuna - Largura de cada coluna
-     * @param {number} alturaCabecalho - Altura do cabeçalho
-     * @returns {number} Nova posição Y após o cabeçalho
-     */
     function desenharCabecalhoTabela(documento, posicaoY, larguraPagina, margem, larguraColuna, alturaCabecalho) {
         let posicaoX = margem;
         const topoCabecalho = posicaoY - alturaCabecalho;
-        
-        documento.setFillColor(26, 26, 26); // preto 
+        documento.setFillColor(26, 26, 26);
         documento.rect(posicaoX, topoCabecalho, larguraPagina - (margem * 2), alturaCabecalho, 'F');
-        
-        //bordas das colunas
-        documento.setDrawColor(10, 10, 10); // preto mais escuro para bordas
+        documento.setDrawColor(10, 10, 10);
         documento.setLineWidth(0.3);
-        
         documento.setTextColor(255, 255, 255); 
         
         colunasPlanilha.forEach((coluna, index) => {
             const x = posicaoX + (index * larguraColuna);
             const centroX = x + (larguraColuna / 2);
-            
-            //borda vertical
-            if (index > 0) {
-                documento.line(x, topoCabecalho, x, posicaoY);
-            }
+            if (index > 0) documento.line(x, topoCabecalho, x, posicaoY);
             
             const centroY = topoCabecalho + (alturaCabecalho / 2);
-            
             documento.setFontSize(8);
             documento.setFont('helvetica', 'bold');
             
             if (coluna.subtitulo) {
-                const offsetTitulo = 2.5;
-                const offsetSubtitulo = 4.5;
-                documento.text(coluna.titulo, centroX, centroY - offsetTitulo, { align: 'center' });
-                
+                documento.text(coluna.titulo, centroX, centroY - 2.5, { align: 'center' });
                 documento.setFontSize(6);
                 documento.setFont('helvetica', 'normal');
-                documento.text(coluna.subtitulo, centroX, centroY + offsetSubtitulo, { align: 'center' });
+                documento.text(coluna.subtitulo, centroX, centroY + 4.5, { align: 'center' });
             } else {
                 documento.text(coluna.titulo, centroX, centroY + 2, { align: 'center' });
             }
         });
-        
-        documento.line(posicaoX + (colunasPlanilha.length * larguraColuna), topoCabecalho, 
-                       posicaoX + (colunasPlanilha.length * larguraColuna), posicaoY);
-        
+        documento.line(posicaoX + (colunasPlanilha.length * larguraColuna), topoCabecalho, posicaoX + (colunasPlanilha.length * larguraColuna), posicaoY);
         return posicaoY;
     }
 
-    /**
-     * Desenha uma célula da tabela no PDF
-     * @param {Object} documento - Instância do jsPDF
-     * @param {string} conteudo - Conteúdo da célula
-     * @param {number} x - Posição X
-     * @param {number} y - Posição Y
-     * @param {number} largura - Largura da célula
-     * @param {number} altura - Altura da célula
-     */
     function desenharCelula(documento, conteudo, x, y, largura, altura) {
         documento.setFillColor(255, 255, 255);
         documento.rect(x, y, largura, altura, 'F');
-        
-        // Borda
-        documento.setDrawColor(224, 224, 224); // Cinza claro #e0e0e0
+        documento.setDrawColor(224, 224, 224);
         documento.setLineWidth(0.2);
         documento.rect(x, y, largura, altura);
         
-        // Texto
         if (conteudo) {
             documento.setFontSize(7);
             documento.setFont('helvetica', 'normal');
             documento.setTextColor(26, 26, 26);
-            
             const linhas = documento.splitTextToSize(conteudo, largura - 4);
             const alturaLinha = 4;
-            const padding = 2;
-            
             linhas.forEach((linha, index) => {
-                if ((index * alturaLinha) + padding < altura - 2) {
-                    documento.text(linha, x + padding, y + padding + (index * alturaLinha) + 3, {
-                        maxWidth: largura - (padding * 2)
-                    });
+                if ((index * alturaLinha) + 2 < altura - 2) {
+                    documento.text(linha, x + 2, y + 2 + (index * alturaLinha) + 3, { maxWidth: largura - 4 });
                 }
             });
         }
     }
 
-    /**
-     * Desenha uma linha de dados da planilha no PDF
-     * @param {Object} documento - Instância do jsPDF
-     * @param {Object} linhaDados - Dados de uma linha
-     * @param {number} posicaoY - Posição Y inicial
-     * @param {number} larguraPagina - Largura da página
-     * @param {number} margem - Margem lateral
-     * @param {number} larguraColuna - Largura de cada coluna
-     * @param {number} alturaLinha - Altura da linha
-     * @returns {number} Nova posição Y após a linha
-     */
     function desenharLinhaDados(documento, linhaDados, posicaoY, larguraPagina, margem, larguraColuna, alturaLinha) {
         let posicaoX = margem;
-        
         colunasPlanilha.forEach((coluna, index) => {
             const x = posicaoX + (index * larguraColuna);
-            const conteudo = linhaDados[coluna.chave] || '';
-            desenharCelula(documento, conteudo, x, posicaoY, larguraColuna, alturaLinha);
+            desenharCelula(documento, linhaDados[coluna.chave] || '', x, posicaoY, larguraColuna, alturaLinha);
         });
-        
         return posicaoY + alturaLinha;
     }
 
-    /**
-     * Função principal para gerar o relatório em PDF no formato de planilha
-     * Coleta os dados, valida e cria o documento PDF
-     */
     function gerarPdf() {
         const dadosFormulario = coletarDadosFormulario();
         
@@ -262,62 +231,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const alturaCabecalho = 18;
         const alturaLinha = 50;
 
-        let posicaoY = configurarCabecalhoPdf(
-            documento, 
-            larguraPagina, 
-            margem, 
-            dadosFormulario.responsavel, 
-            dadosFormulario.area
-        );
-
-        posicaoY = desenharCabecalhoTabela(
-            documento, 
-            posicaoY, 
-            larguraPagina, 
-            margem, 
-            larguraColuna, 
-            alturaCabecalho
-        );
+        let posicaoY = configurarCabecalhoPdf(documento, larguraPagina, margem, dadosFormulario.responsavel, dadosFormulario.area);
+        posicaoY = desenharCabecalhoTabela(documento, posicaoY, larguraPagina, margem, larguraColuna, alturaCabecalho);
 
         dadosFormulario.linhas.forEach(linha => {
             if (posicaoY + alturaLinha > alturaPagina - margem) {
                 documento.addPage();
                 posicaoY = margem;
-                
-                posicaoY = configurarCabecalhoPdf(
-                    documento, 
-                    larguraPagina, 
-                    margem, 
-                    dadosFormulario.responsavel, 
-                    dadosFormulario.area
-                );
-                
-                posicaoY = desenharCabecalhoTabela(
-                    documento, 
-                    posicaoY, 
-                    larguraPagina, 
-                    margem, 
-                    larguraColuna, 
-                    alturaCabecalho
-                );
+                posicaoY = configurarCabecalhoPdf(documento, larguraPagina, margem, dadosFormulario.responsavel, dadosFormulario.area);
+                posicaoY = desenharCabecalhoTabela(documento, posicaoY, larguraPagina, margem, larguraColuna, alturaCabecalho);
             }
-            
-            posicaoY = desenharLinhaDados(
-                documento,
-                linha,
-                posicaoY,
-                larguraPagina,
-                margem,
-                larguraColuna,
-                alturaLinha
-            );
+            posicaoY = desenharLinhaDados(documento, linha, posicaoY, larguraPagina, margem, larguraColuna, alturaLinha);
         });
 
         const dataAtual = new Date();
         const nomeArquivo = `Plano_Acão_5W2H_${dataAtual.toISOString().split('T')[0]}.pdf`;
-        
         documento.save(nomeArquivo);
     }
 
-    botaoGerarPdf.addEventListener('click', gerarPdf);
+    if(botaoGerarPdf) {
+        botaoGerarPdf.addEventListener('click', gerarPdf);
+    }
 });
