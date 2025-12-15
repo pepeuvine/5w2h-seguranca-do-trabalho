@@ -360,3 +360,102 @@ header .highlight {
         padding: 30px 24px;
     }
 }
+
+/* --- RODAPÉ DE CRÉDITOS --- */
+.credits-footer {
+    background-color: #f8f8f8;
+    padding: 40px 20px;
+    margin-top: 40px;
+}
+
+.credits-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.copyright {
+    font-size: 0.9em;
+    color: #5a5a5a;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.credits-divider {
+    width: 100%;
+    max-width: 800px;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 15px auto 25px;
+}
+
+.credits-intro {
+    font-size: 0.95em;
+    color: #2a2a2a;
+    margin-bottom: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.credits-names {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.credits-column {
+    flex: 0 1 auto;
+    min-width: 280px;
+    text-align: left;
+}
+
+.credits-column p {
+    font-size: 0.9em;
+    color: #3a3a3a;
+    margin-bottom: 10px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+.credits-column p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .credits-footer {
+        padding: 35px 20px;
+        margin-top: 30px;
+    }
+
+    .credits-content {
+        max-width: 100%;
+    }
+
+    .credits-divider {
+        max-width: 100%;
+    }
+
+    .credits-names {
+        flex-direction: column;
+        gap: 15px;
+        max-width: 100%;
+    }
+
+    .credits-column {
+        text-align: center;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .credits-intro {
+        font-size: 0.9em;
+        padding: 0 10px;
+    }
+
+    .credits-column p {
+        font-size: 0.85em;
+    }
+}
