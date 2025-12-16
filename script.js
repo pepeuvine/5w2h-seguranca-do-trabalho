@@ -201,13 +201,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const alturaLinha = 8;
             const espacamentoInicial = paddingVertical + 3;
             
+            const centroX = x + (largura / 2);
+            
             linhas.forEach((linha, index) => {
                 const posicaoYLinha = y + espacamentoInicial + (index * alturaLinha);
-                const alturaDisponivel = altura - (paddingVertical * 2);
                 if (posicaoYLinha + alturaLinha <= y + altura - paddingVertical) {
-                    documento.text(linha.trim(), x + paddingHorizontal, posicaoYLinha, { 
+                    documento.text(linha.trim(), centroX, posicaoYLinha, { 
                         maxWidth: larguraTexto,
-                        align: 'left'
+                        align: 'center'
                     });
                 }
             });
