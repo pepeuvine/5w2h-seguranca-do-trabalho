@@ -48,6 +48,36 @@ header .highlight {
     font-weight: 700;
 }
 
+/* --- CONTADOR DE VISITANTES --- */
+.visitor-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.counter-icon {
+    font-size: 1.2em;
+}
+
+.counter-label {
+    color: #5a5a5a;
+    font-weight: 500;
+}
+
+.counter-number {
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 1.1em;
+    min-width: 40px;
+    text-align: center;
+}
+
 .header-fields {
     display: flex;
     gap: 30px;
@@ -299,6 +329,11 @@ header .highlight {
         flex-direction: column;
     }
 
+    .visitor-counter {
+        align-self: flex-start;
+        margin-bottom: 15px;
+    }
+
     .header-fields {
         width: 100%;
     }
@@ -328,6 +363,20 @@ header .highlight {
 
     header h1 {
         font-size: 1.7em;
+    }
+
+    .visitor-counter {
+        font-size: 0.85em;
+        padding: 8px 12px;
+        margin-bottom: 15px;
+    }
+
+    .counter-icon {
+        font-size: 1.1em;
+    }
+
+    .counter-number {
+        font-size: 1em;
     }
 
     .table-wrapper {

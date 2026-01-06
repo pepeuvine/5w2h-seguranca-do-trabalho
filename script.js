@@ -3,6 +3,67 @@
 // Controla o índice das linhas. Começa com 5 pois o HTML inicial já tem 5 linhas (indices 0 a 4).
 let totalLinhas = 5;
 
+// --- CONFIGURAÇÃO DO FIREBASE E CONTADOR DE VISITANTES ---
+
+// Configurações do Firebase
+// Credenciais obtidas do Firebase Console
+const firebaseConfig = {
+    apiKey: "AIzaSyDl_11BXthp3hkeBrhL5vDD8CRTUHhmGss",
+    authDomain: "w2h-visitor-counter.firebaseapp.com",
+    databaseURL: "https://w2h-visitor-counter-default-rtdb.firebaseio.com",
+    projectId: "w2h-visitor-counter",
+    storageBucket: "w2h-visitor-counter.firebasestorage.app",
+    messagingSenderId: "12336772918",
+    appId: "1:12336772918:web:a8cc4c36d6688bf8f16597"
+};
+
+// Inicializa Firebase (apenas se as configurações estiverem definidas)
+let database = null;
+if (firebaseConfig.apiKey !== "SUA_API_KEY_AQUI") {
+    try {
+        firebase.initializeApp(firebaseConfig);
+        database = firebase.database();
+    } catch (error) {
+        console.error("Erro ao inicializar Firebase:", error);
+    }
+}
+
+/**
+ * Incrementa o contador de visitantes no Firebase
+ */
+function incrementarContadorVisitantes() {
+    if (!database) {
+        // Se Firebase não estiver configurado, mostra mensagem no console
+        console.log("Firebase não configurado. Configure as credenciais no script.js");
+        document.getElementById('visitorCount').textContent = 'N/A';
+        return;
+    }
+
+    const contadorRef = database.ref('visitorCount');
+    
+    // Usa transação para garantir que o incremento seja atômico
+    contadorRef.transaction(function(currentValue) {
+        return (currentValue || 0) + 1;
+    }, function(error, committed, snapshot) {
+        if (error) {
+            console.error("Erro ao atualizar contador:", error);
+            document.getElementById('visitorCount').textContent = 'Erro';
+        } else if (committed) {
+            // Atualiza o valor exibido na tela
+            const novoValor = snapshot.val();
+            document.getElementById('visitorCount').textContent = novoValor.toLocaleString('pt-BR');
+        }
+    });
+
+    // Escuta mudanças no contador para atualizar em tempo real
+    contadorRef.on('value', function(snapshot) {
+        const valor = snapshot.val();
+        if (valor !== null) {
+            document.getElementById('visitorCount').textContent = valor.toLocaleString('pt-BR');
+        }
+    });
+}
+
 // Definição das colunas
 const colunasPlanilha = [
     { chave: 'what', titulo: 'O QUE?', subtitulo: 'WHAT' },
@@ -72,6 +133,9 @@ window.removerLinha = function() {
 
 // --- INICIALIZAÇÃO E LÓGICA DO PDF ---
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa o contador de visitantes
+    incrementarContadorVisitantes();
+    
     const formulario = document.getElementById('form5w2h');
     const botaoGerarPdf = document.getElementById('generatePdf');
 

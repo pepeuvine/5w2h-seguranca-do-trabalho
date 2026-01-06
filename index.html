@@ -12,12 +12,20 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
   </head>
   <body>
     <div class="container">
       <header>
         <div class="header-content">
           <h1>Plano de Ação <span class="highlight">5W2H</span></h1>
+          <div class="visitor-counter">
+            <span class="counter-icon">👥</span>
+            <span class="counter-label">Visitantes:</span>
+            <span id="visitorCount" class="counter-number">-</span>
+          </div>
           <div class="header-fields">
             <div class="field-group">
               <label for="responsavel">Responsável:</label>
